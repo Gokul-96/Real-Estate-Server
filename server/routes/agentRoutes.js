@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const Agent = require('../models/AgentModel');
 const router = express.Router();
 
+const config = require('../utils/config');
+
 
 
 
@@ -65,15 +67,13 @@ if (!agent) {
 
 
 //jsw
-const token = jwt.sign({ agentId: agent._id }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+const token = jwt.sign({ agentId: agent._id }, config.SECRET_KEY, { expiresIn: '1h',});
 
-res.json({ token });
+ res.json({ token });
 
 
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Internal Server error' });
   }
 });
 
