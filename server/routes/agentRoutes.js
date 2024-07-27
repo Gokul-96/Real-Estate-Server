@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs'); //create hashed version of password for secu
 const jwt = require('jsonwebtoken');
 const Agent = require('../models/AgentModel');
 const router = express.Router();
-
 const config = require('../utils/config');
 
 
@@ -41,7 +40,15 @@ try {
   }
 });
 
-
+//checking purpose to retrieve agents data (optional In this project not asked)
+router.get('/agents', async (req, res) => {
+  try {
+    const agents = await Agent.find({});
+    res.status(200).json(agents);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 // Agent Login here 

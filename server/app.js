@@ -8,10 +8,9 @@ const propertyRoutes = require('./routes/propertyRoutes');
 app.use(cors());
 app.use(express.json());
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
-
+//Define routes
+//to check in postman or browser for register:  localhost: 3001/api/agentRoutes/register
+// For login :  localhost: 3001/api/agentRoutes/login
 app.use('/api/agentRoutes', agentRoutes);
 app.use('/api/properties', propertyRoutes);
 

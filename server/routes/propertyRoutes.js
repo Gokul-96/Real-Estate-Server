@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Create a new property
+// Create a new property (CREATE)
 router.post('/', authMiddleware, async (req, res) => {
   const { type, location, description ,price} = req.body;
 try {
@@ -24,17 +24,17 @@ await property.save();
   }
 });
 
-// All properties get agent
+// Find All properties using get and agent field matches req.agent (READ)
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const properties = await Property.find({ agent: req.agent });
-    res.json(properties);
+    res.json(properties); //In json format properties
   } catch (error) {
     res.status(500).json({ message:'Server error' });
   }
 });
 
-// Update a property
+// Update a property (UPDATE)
 router.put('/:id', authMiddleware, async (req, res) => {
   const { type, location, price, description, status } = req.body;
 
@@ -48,7 +48,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
     if (property.agent.toString() !== req.agent) {
       return res.status(401).json({ message: 'Not authorized' });
     }
-
+ //update property with new value or existing value 
     property.type = type || property.type;
     property.location = location || property.location;
     property.price = price || property.price;
@@ -63,7 +63,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// Delete a property
+// Delete a property (DELETE)
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
