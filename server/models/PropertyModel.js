@@ -12,7 +12,7 @@ const propertySchema = new mongoose.Schema({
   
   description:{ type: String },
   price: { type: Number, required: true },
-  status: { type: String },
+  status: { type: String, enum: ['Available', 'Sold'], default: 'Available' },
 });
 
 
