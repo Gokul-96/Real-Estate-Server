@@ -13,3 +13,6 @@ mongoose.connect(config.MONGO_URI)
   .catch((error) => {
     console.error('MongoDB connection error:', error);
   });
+
+
+  //node server.js
