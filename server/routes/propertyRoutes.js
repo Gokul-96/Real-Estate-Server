@@ -63,6 +63,31 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// Update property status (PATCH)
+router.patch('/:id/status', authMiddleware, async (req, res) => {
+  const { status } = req.body;
+
+  try {
+    const property = await Property.findById(req.params.id);
+
+    if (!property) {
+      return res.status(404).json({ message: 'Not found' });
+    }
+
+    if (property.agent.toString() !== req.agent) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    property.status = status;
+
+    await property.save();
+
+    res.json(property);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Delete a property (DELETE)
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
